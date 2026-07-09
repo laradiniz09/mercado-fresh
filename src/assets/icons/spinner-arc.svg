@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="140" height="140" viewBox="0 0 140 140" fill="none">
+  <!--
+    Rotating arc  fresh primary (#2e7d52)
+    Circumference of r=62 H 389.6 px
+    Dash: ~292 (3/4 arc) | Gap: ~98
+    rotate(-90) starts arc from the top (12 o'clock)
+    The .animate-spin-arc class in index.css rotates this element continuously.
+  -->
+  <circle
+    cx="70" cy="70" r="62"
+    stroke="#2e7d52"
+    stroke-width="8"
+    stroke-linecap="round"
+    stroke-dasharray="292 98"
+    transform="rotate(-90 70 70)"
+  />
+</svg>
