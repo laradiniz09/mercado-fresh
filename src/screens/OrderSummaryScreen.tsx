@@ -49,7 +49,7 @@ function ProductRow({
       </div>
       <div className="flex flex-1 flex-col gap-1 min-w-0">
         <div className="flex items-center justify-between gap-2">
-          <p className="font-body text-body-md font-semibold text-content-primary flex-1 min-w-0 overflow-hidden text-ellipsis whitespace-nowrap leading-[1.3]">
+          <p className="font-body text-body-md font-semibold text-content-primary flex-1 min-w-0 overflow-hidden text-ellipsis whitespace-nowrap leading-snug">
             {name}
           </p>
           <p className="font-body text-body-md font-bold text-content-primary shrink-0 whitespace-nowrap">
@@ -104,14 +104,14 @@ export default function OrderSummaryScreen({ onBack, onCheckout, onBackToStore }
 
         {/* Success header */}
         <div className="flex flex-col items-center gap-4 py-6">
-          <div className="flex h-16 w-16 items-center justify-center rounded-[36px] bg-surface-brand">
+          <div className="flex h-16 w-16 items-center justify-center rounded-check bg-surface-brand">
             <CheckIcon className="text-content-inverse h-8 w-8" />
           </div>
           <div className="flex flex-col items-center gap-2 text-center w-full">
             <h1 className="font-heading text-heading-xl font-bold text-content-primary w-full">
               Pedido preparado
             </h1>
-            <p className="font-body text-body-md text-content-secondary leading-[1.4]">
+            <p className="font-body text-body-md text-content-secondary leading-snug">
               Seus itens foram reservados e estão{'\n'}prontos para o pagamento.
             </p>
           </div>
@@ -128,7 +128,7 @@ export default function OrderSummaryScreen({ onBack, onCheckout, onBackToStore }
               className="flex items-center gap-2 active:opacity-70"
             >
               <img src={imgCountdown} alt="" className="h-5 w-5" />
-              <span className="font-body text-[13px] font-extrabold text-content-brand">
+              <span className="font-body text-body-xs font-extrabold text-content-brand">
                 DESFAZER ({countdown}s)
               </span>
             </button>
@@ -136,11 +136,8 @@ export default function OrderSummaryScreen({ onBack, onCheckout, onBackToStore }
         )}
 
         {/* Summary card */}
-        <div
-          className="flex flex-col gap-4 rounded-card bg-surface-muted px-6 py-4"
-          style={{ boxShadow: '0px 4px 6px rgba(0,0,0,0.03)' }}
-        >
-          <p className="font-heading text-body-sm font-semibold text-content-brand">
+        <div className="flex flex-col gap-4 rounded-card bg-surface-muted px-6 py-4 shadow-card-sm">
+          <p className="font-body text-body-sm font-semibold text-content-brand">
             Resumo
           </p>
 
@@ -160,7 +157,7 @@ export default function OrderSummaryScreen({ onBack, onCheckout, onBackToStore }
 
           {/* Subtotal */}
           <div className="flex items-center justify-between gap-3">
-            <p className="font-body text-[13px] font-semibold text-content-primary flex-1">
+            <p className="font-body text-body-xs font-semibold text-content-primary flex-1">
               Subtotal
             </p>
             <p className="font-body text-body-md font-bold text-content-primary whitespace-nowrap">
@@ -170,7 +167,7 @@ export default function OrderSummaryScreen({ onBack, onCheckout, onBackToStore }
 
           {/* Service fee */}
           <div className="flex items-center justify-between gap-3">
-            <p className="font-body text-[13px] font-semibold text-content-primary flex-1">
+            <p className="font-body text-body-xs font-semibold text-content-primary flex-1">
               Taxa de serviço
             </p>
             <div className="flex items-center gap-1 shrink-0">
@@ -191,7 +188,7 @@ export default function OrderSummaryScreen({ onBack, onCheckout, onBackToStore }
             <p className="font-body text-body-md font-semibold text-content-primary">Total:</p>
             <p className="font-body text-body-sm text-content-primary">4 itens • Frete grátis</p>
           </div>
-          <p className="font-heading text-[24px] font-extrabold text-content-primary whitespace-nowrap">
+          <p className="font-heading text-heading-xl font-extrabold text-content-primary whitespace-nowrap">
             R$ 46,80
           </p>
         </div>
@@ -205,7 +202,7 @@ export default function OrderSummaryScreen({ onBack, onCheckout, onBackToStore }
             onClick={onBackToStore}
             className="flex h-10 w-full items-center justify-center active:opacity-70"
           >
-            <span className="font-body text-base font-semibold text-content-secondary">
+            <span className="font-body text-body-lg font-semibold text-content-secondary">
               Voltar ao Mercado
             </span>
           </button>

@@ -24,7 +24,7 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
       
       {/* Status Bar — light theme (white text/icons) */}
       <div className="flex h-11 w-full shrink-0 items-center justify-between px-6">
-        <span className="font-heading text-[15px] font-semibold text-content-inverse">9:41</span>
+        <span className="font-heading text-status-bar text-content-inverse">9:41</span>
         <div className="flex items-center gap-1.5">
           <img src={imgSignal}   alt="" className="h-5 w-5 brightness-0 invert" />
           <img src={imgWifi}     alt="" className="h-5 w-5 brightness-0 invert" />
@@ -37,18 +37,12 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
         {/* Store Name + Tagline */}
         <div className="flex flex-col items-center gap-2 px-6">
           <div className="flex items-center gap-2">
-            <h1
-              className="font-heading text-[32px] font-semibold text-content-inverse"
-              style={{ textShadow: '0px 4px 8px rgba(112,108,108,0.25)' }}
-            >
+            <h1 className="font-heading text-heading-xxl text-content-inverse text-shadow-soft">
               Mercado Fresh
             </h1>
             <img src={imgShoppingCart} alt="" className="h-8 w-8" />
           </div>
-          <p
-            className="font-body text-base text-content-inverse text-center"
-            style={{ textShadow: '0px 4px 8px rgba(112,108,108,0.25)' }}
-          >
+          <p className="font-body text-body-lg text-content-inverse text-center text-shadow-soft">
             Comida fresquinha entregue na sua casa
           </p>
         </div>
@@ -68,7 +62,7 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
         <Button
           variant="primary"
           onClick={onStart}
-          className="bg-fresh shadow-none font-semibold text-base"
+          className="bg-fresh shadow-none font-semibold text-body-lg"
         >
           Vamos começar
         </Button>

@@ -106,4 +106,9 @@
     from { opacity: 0; transform: translateY(6px); }
     to   { opacity: 1; transform: translateY(0); }
   }
+
+  /* Soft text shadow — used on hero text over gradient backgrounds */
+  .text-shadow-soft {
+    text-shadow: 0px 4px 8px rgba(112, 108, 108, 0.25);
+  }
 }

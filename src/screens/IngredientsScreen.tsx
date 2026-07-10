@@ -65,15 +65,12 @@ function IngredientCard({
   onIncrement: () => void
 }) {
   return (
-    <div
-      className="flex gap-4 rounded-card bg-surface p-3 items-start"
-      style={{ boxShadow: '0px 4px 6px rgba(0,0,0,0.04)' }}
-    >
+    <div className="flex gap-4 rounded-card bg-surface p-3 items-start shadow-card-sm">
       <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-sm bg-surface-muted overflow-hidden">
         <img src={img} alt={name} className="h-12 w-12 rounded-sm object-cover" />
       </div>
       <div className="flex flex-1 flex-col gap-2 min-w-0">
-        <p className="font-body text-body-md font-semibold text-content-primary leading-[1.3] overflow-hidden text-ellipsis whitespace-nowrap">
+        <p className="font-body text-body-md font-semibold text-content-primary leading-snug overflow-hidden text-ellipsis whitespace-nowrap">
           {name}
         </p>
         <div className="flex items-center justify-between">
@@ -88,7 +85,7 @@ function IngredientCard({
           <button onClick={onDecrement} className="flex items-center justify-center active:opacity-70">
             <TrashIcon className="text-content-secondary h-5 w-5" />
           </button>
-          <span className="font-semibold text-base text-content-primary">{qty}</span>
+          <span className="font-body text-body-lg font-semibold text-content-primary">{qty}</span>
           <button onClick={onIncrement} className="active:opacity-70">
             <img src={imgPlus} alt="Aumentar" className="h-4 w-4" />
           </button>
@@ -134,7 +131,7 @@ export default function IngredientsScreen({ onBack, onSubstitute, onRemove }: In
 
         {/* Available items section */}
         <div className="flex flex-col gap-4 px-4 pb-6">
-          <p className="font-heading text-heading-sm  text-neutral-250 pt-2">
+          <p className="font-heading text-heading-sm text-neutral-250 pt-2">
             No seu carrinho
           </p>
           {AVAILABLE_ITEMS.map((item) => (
@@ -150,15 +147,12 @@ export default function IngredientsScreen({ onBack, onSubstitute, onRemove }: In
 
         {/* Unavailable items section */}
         <div className="flex flex-col gap-4 px-4 pb-6">
-          <p className="font-heading text-heading-sm  text-orange-100">
+          <p className="font-heading text-heading-sm text-orange-100">
             Indisponível
           </p>
 
           {/* Disabled card */}
-          <div
-            className="flex gap-4 rounded-card bg-surface p-3 items-start"
-            style={{ boxShadow: '0px 4px 6px rgba(0,0,0,0.04)' }}
-          >
+          <div className="flex gap-4 rounded-card bg-surface p-3 items-start shadow-card-sm">
             <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-sm bg-surface-muted overflow-hidden">
               <img
                 src={imgLeitePiraque}
@@ -167,7 +161,7 @@ export default function IngredientsScreen({ onBack, onSubstitute, onRemove }: In
               />
             </div>
             <div className="flex flex-1 flex-col gap-2 min-w-0">
-              <p className="font-body text-body-md font-semibold text-content-disabled leading-[1.3] overflow-hidden text-ellipsis whitespace-nowrap">
+              <p className="font-body text-body-md font-semibold text-content-disabled leading-snug overflow-hidden text-ellipsis whitespace-nowrap">
                 Leite Piraquê Zero Lactose 1l
               </p>
               <div className="flex items-center justify-between">
@@ -189,7 +183,7 @@ export default function IngredientsScreen({ onBack, onSubstitute, onRemove }: In
               className="flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-surface-muted active:opacity-80"
             >
               <TrashIcon className="text-danger h-5 w-5" />
-              <span className="font-body text-base font-semibold text-danger">Remover da compra</span>
+              <span className="font-body text-body-lg font-semibold text-danger">Remover da compra</span>
             </button>
           </div>
 

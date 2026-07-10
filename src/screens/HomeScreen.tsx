@@ -57,7 +57,7 @@ function CategoryItem({ label, img }: { label: string; img: string }) {
       <div className="flex h-10 w-10 items-center justify-center rounded-sm bg-surface-muted overflow-hidden">
         <img src={img} alt={label} className="h-10 w-10 rounded-sm object-cover" />
       </div>
-      <span className="w-[68px] text-center font-body text-body-xsm text-content-primary">
+      <span className="w-17 text-center font-body text-body-xsm text-content-primary">
         {label}
       </span>
     </button>
@@ -70,8 +70,8 @@ function OfferItem({ label, price, img }: { label: string; price: string; img: s
       <div className="flex h-10 w-10 items-center justify-center rounded-sm bg-surface-muted overflow-hidden">
         <img src={img} alt={label} className="h-10 w-10 rounded-sm object-cover" />
       </div>
-      <div className="flex flex-col items-start gap-0.5 w-[60px]">
-        <span className="font-body text-xs font-semibold text-content-primary">{price}</span>
+      <div className="flex flex-col items-start gap-0.5 w-15">
+        <span className="font-body text-body-sm font-semibold text-content-primary">{price}</span>
         <span className="font-body text-body-xsm text-content-secondary leading-tight">{label}</span>
       </div>
     </button>
@@ -152,10 +152,7 @@ export default function HomeScreen({ onSearch }: HomeScreenProps) {
           </div>
 
           {/* Input — 278×36px */}
-          <div
-            className="flex items-center gap-2 rounded-lg bg-surface h-9 w-[278px] px-3"
-            style={{ boxShadow: '0px 20px 20px rgba(0,0,0,0.02), 0px 4px 10px rgba(0,0,0,0.03)' }}
-          >
+          <div className="flex items-center gap-2 rounded-lg bg-surface h-9 w-full px-3 shadow-ai-card">
             <input
               type="text"
               value={query}
@@ -166,8 +163,7 @@ export default function HomeScreen({ onSearch }: HomeScreenProps) {
             />
             <button
               onClick={handleSearch}
-              className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-surface-brand active:opacity-80"
-              style={{ boxShadow: '0px 8px 8px rgba(34, 197, 94, 0.25)' }}
+              className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-surface-brand active:opacity-80 shadow-send-btn"
             >
               <SearchIcon className="text-content-inverse h-4 w-4" />
             </button>

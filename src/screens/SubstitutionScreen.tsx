@@ -14,11 +14,11 @@ function RadioDot({ checked }: { checked: boolean }) {
     <div
       className={`h-5 w-5 rounded-full border-2 flex items-center justify-center transition-colors pointer-events-none ${
         checked
-          ? 'bg-fresh-primary-fresh border-fresh-primary-fresh' 
-          : 'bg-transparent border-fresh-primary-light'
+          ? 'bg-fresh border-fresh'
+          : 'bg-surface border-stroke'
       }`}
     >
-      {checked && <div className="h-2 w-2 rounded-full bg-white" />}
+      {checked && <div className="h-2 w-2 rounded-full bg-neutral-50" />}
     </div>
   )
 }
@@ -58,11 +58,7 @@ export default function SubstitutionScreen({ onBack, onApply, onBackToCart }: Su
         {/* Card: Substitution */}
         <button
           onClick={() => setSelected('substitute')}
-          className={`w-full flex flex-col gap-2 rounded-[16px] p-4 text-left transition-all duration-200 bg-surface border ${
-            selected === 'substitute'
-              ? 'border-2 border-stroke-border-divider'
-              : 'border border-stroke-border-default'
-          }`}
+          className="w-full flex flex-col gap-2 rounded-card p-4 text-left bg-surface border border-stroke active:opacity-90"
         >
           <div className="flex items-center justify-between w-full">
             <span className="font-body text-body-sm font-semibold text-content-brand">
@@ -86,11 +82,7 @@ export default function SubstitutionScreen({ onBack, onApply, onBackToCart }: Su
         {/* Card: Notification */}
         <button
           onClick={() => setSelected('notify')}
-          className={`w-full flex flex-col gap-2 rounded-[16px] p-4 text-left transition-all duration-200 bg-surface border ${
-            selected === 'notify'
-              ? 'border-2 border-stroke-border-divider'
-              : 'border border-stroke-border-default'
-          }`}
+          className="w-full flex flex-col gap-2 rounded-card p-4 text-left bg-surface border border-stroke active:opacity-90"
         >
           <div className="flex items-center justify-between w-full">
             <span className="font-body text-body-sm font-semibold text-content-primary">
@@ -99,18 +91,19 @@ export default function SubstitutionScreen({ onBack, onApply, onBackToCart }: Su
             <RadioDot checked={selected === 'notify'} />
           </div>
           <div className="flex items-center gap-2 w-full py-3">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[20px] bg-surface-muted">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-avatar bg-surface-muted">
               <BellIcon className="text-content-secondary h-5 w-5" />
             </div>
-            <p className="font-body text-body-sm text-content-secondary leading-[1.5] flex-1">
+            <p className="font-body text-body-sm text-content-secondary leading-normal flex-1">
               Seguiremos com a compra sem este item e te notificaremos assim que ele chegar.
             </p>
+
           </div>
         </button>
       </div>
 
       {/* Sticky Bottom Bar - Intacto */}
-      <div className="shrink-0 flex flex-col items-center gap-4 px-4 pt-4 pb-6 bg-surface border-t border-stroke-border-default">
+      <div className="shrink-0 flex flex-col items-center gap-4 px-4 pt-4 pb-6 bg-surface border-t border-stroke">
         <Button variant="primary" onClick={() => onApply(selected)}>
           Aplicar seleção e continuar
         </Button>
@@ -118,7 +111,7 @@ export default function SubstitutionScreen({ onBack, onApply, onBackToCart }: Su
           onClick={onBackToCart}
           className="flex h-10 w-full items-center justify-center active:opacity-70"
         >
-          <span className="font-body text-base font-semibold text-content-secondary">
+          <span className="font-body text-body-lg font-semibold text-content-secondary">
             Voltar ao carrinho
           </span>
         </button>

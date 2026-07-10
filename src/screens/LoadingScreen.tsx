@@ -49,36 +49,36 @@ export default function LoadingScreen({ query = '', onComplete }: LoadingScreenP
         </span>
 
         {/* Imagem principal (Centralizada) */}
-        <div className="flex items-center justify-center h-[140px] w-[140px]">
+        <div className="flex items-center justify-center h-35 w-35">
           <img
             src={imgLoadingFood}
             alt={query || 'Carregando'}
-            className="h-[100px] w-[100px] object-contain"
+            className="h-25 w-25 object-contain"
           />
         </div>
 
         {/* Mensagem + Dots */}
         <div className="flex flex-col items-center gap-3">
-          <p className="font-body text-base font-bold text-content-brand text-center">
+          <p className="font-body text-heading-sm text-content-brand text-center">
             {MESSAGES[msgIndex]}
           </p>
           
           {/* Dots fixos conforme especificação */}
-          <div className="flex items-center gap-[6px]">
+          <div className="flex items-center gap-1.5">
             {/* Dot 1: Full opacity */}
-            <div className="h-[6px] w-[6px] rounded-full bg-[#1F5D3B]" />
-            
+            <div className="h-1.5 w-1.5 rounded-full bg-fresh-dark" />
+
             {/* Dot 2: Opacity 0.4 */}
-            <div className="h-[6px] w-[6px] rounded-full bg-[#1F5D3B] opacity-40" />
-            
+            <div className="h-1.5 w-1.5 rounded-full bg-fresh-dark opacity-40" />
+
             {/* Dot 3: Opacity 0.4 */}
-            <div className="h-[6px] w-[6px] rounded-full bg-[#1F5D3B] opacity-40" />
+            <div className="h-1.5 w-1.5 rounded-full bg-fresh-dark opacity-40" />
           </div>
         </div>
       </div>
 
       {/* Indicador de home do iOS */}
-      <div className="flex h-[34px] items-center justify-center w-full shrink-0">
+      <div className="flex h-8.5 items-center justify-center w-full shrink-0">
         <div className="h-[5px] w-[134px] rounded-full bg-neutral-150" />
       </div>
     </div>
