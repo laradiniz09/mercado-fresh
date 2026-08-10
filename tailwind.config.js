@@ -9,8 +9,8 @@ export default {
         fresh: {
           DEFAULT: '#2e7d52',   // Fresh/Primary-fresh
           dark:    '#1f5d3b',   // Fresh/Primary-dark
-          light:   '#0bb759',   // Fresh/Primary-light
-        },
+          light:   '#0bb759',   // Fresh/Primary-light        
+          },
         // Neutral scale
         neutral: {
           50:  '#ffffff',  // Neutral/Neutral-50
@@ -31,8 +31,10 @@ export default {
         // Semantic background surfaces
         surface: {
           DEFAULT: '#ffffff',  // bg-surface
-          muted:   '#f9f9f9',  // bg-default
+          muted:   '#f3f3f3',  // bg-default
+          lighter: '#fafafa',  // bg-surface-lighter
           brand:   '#2e7d52',  // bg-brand
+          card:   '#1C5938',   // Fresh/Primary-darker 
         },
         // Stroke / border tokens
         stroke: {
@@ -50,9 +52,10 @@ export default {
 
       // ─── Typography ─────────────────────────────────────────────────────────
       fontFamily: {
-        heading: ['Roboto', 'sans-serif'],   // Font-family/Heading
-        body:    ['Inter',  'sans-serif'],   // Font-family/Body
-        sans:    ['Inter',  'sans-serif'],   // default
+        heading: ['Roboto', 'sans-serif'],                          // Font-family/Heading
+        body:    ['Inter',  'sans-serif'],                          // Font-family/Body
+        sans:    ['Inter',  'sans-serif'],                          // default
+        script:  ['"Segoe Script"', 'cursive', 'sans-serif'],       // Splash logo
       },
       fontSize: {
         // Heading scale (Font-size / Heading — Figma)

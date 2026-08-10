@@ -1,51 +1,51 @@
 // Bottom navigation — matches Figma 02_tela_home tab-bar (64px + 34px home indicator)
-import savedIcon  from '../assets/icons/bookmark.svg'
-import cartIcon   from '../assets/icons/shopping-cart.svg'
-import userIcon   from '../assets/icons/user.svg'
-import { HouseIcon } from './icons'
+import type { ComponentType, SVGProps } from 'react'
+import { HouseIcon, BookmarkIcon, ShoppingCartIcon, UserIcon } from './icons'
 
 export type TabId = 'home' | 'saved' | 'cart' | 'account'
+
+type IconProps = SVGProps<SVGSVGElement>
+
+interface TabConfig {
+  id: TabId
+  label: string
+  Icon: ComponentType<IconProps>
+}
+
+const TABS: TabConfig[] = [
+  { id: 'home',    label: 'Home',     Icon: HouseIcon        },
+  { id: 'saved',   label: 'Salvo',    Icon: BookmarkIcon     },
+  { id: 'cart',    label: 'Carrinho', Icon: ShoppingCartIcon },
+  { id: 'account', label: 'Conta',    Icon: UserIcon         },
+]
 
 interface TabBarProps {
   activeTab?: TabId
   onTabChange?: (tab: TabId) => void
 }
 
-const IMG_TABS: { id: TabId; label: string; icon: string }[] = [
-  { id: 'saved',   label: 'Salvo',    icon: savedIcon  },
-  { id: 'cart',    label: 'Carrinho', icon: cartIcon   },
-  { id: 'account', label: 'Conta',    icon: userIcon   },
-]
-
 export default function TabBar({ activeTab = 'home', onTabChange }: TabBarProps) {
-  const tabs: TabId[] = ['home', 'saved', 'cart', 'account']
-
   return (
-    <div className="shrink-0 border-t border-stroke bg-surface">
+    <nav aria-label="Navegação principal" className="shrink-0 border-t border-stroke bg-surface">
+
       {/* Tab row */}
       <div className="flex h-16 items-center justify-between px-3 pt-2">
-        {tabs.map((id) => {
+        {TABS.map(({ id, label, Icon }) => {
           const isActive = id === activeTab
-          const label = id === 'home' ? 'Home' : IMG_TABS.find((t) => t.id === id)!.label
           return (
             <button
               key={id}
               onClick={() => onTabChange?.(id)}
+              aria-label={label}
+              aria-current={isActive ? 'page' : undefined}
               className="flex flex-1 flex-col items-center gap-1 min-w-0"
             >
-              {id === 'home' ? (
-                <HouseIcon
-                  className={`h-6 w-6 transition-colors ${
-                    isActive ? 'text-content-primary' : 'text-content-tertiary'
-                  }`}
-                />
-              ) : (
-                <img
-                  src={IMG_TABS.find((t) => t.id === id)!.icon}
-                  alt={label}
-                  className={`h-6 w-6 transition-opacity ${isActive ? 'opacity-100' : 'opacity-40'}`}
-                />
-              )}
+              <Icon
+                aria-hidden="true"
+                className={`h-6 w-6 transition-colors ${
+                  isActive ? 'text-content-brand' : 'text-content-tertiary'
+                }`}
+              />
               <span
                 className={`font-body text-body-xsm ${
                   isActive ? 'font-semibold text-content-brand' : 'font-medium text-content-tertiary'
@@ -58,10 +58,13 @@ export default function TabBar({ activeTab = 'home', onTabChange }: TabBarProps)
         })}
       </div>
 
-      {/* iOS home indicator */}
-      <div className="flex h-[34px] items-center justify-center">
-        <div className="h-[5px] w-[134px] rounded-full bg-neutral-150" />
+      {/* iOS home indicator — h-8.5 = 34px (token), dimensões da barra via inline style */}
+      <div className="flex h-8.5 items-center justify-center">
+        <div
+          className="rounded-full bg-neutral-150"
+          style={{ width: '134px', height: '5px' }}
+        />
       </div>
-    </div>
+    </nav>
   )
 }

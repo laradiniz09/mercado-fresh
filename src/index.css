@@ -4,111 +4,43 @@
 
 /* ── Reset & Base ────────────────────────────────────────────────── */
 @layer base {
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  html,
-  body,
-  #root {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-  }
-
-  body {
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    line-height: 1.5;
-    color: #2d2d2d;
-    background-color: #e5e7eb;
-    /* Prevent text size adjustment on iOS rotation */
-    -webkit-text-size-adjust: 100%;
-    text-size-adjust: 100%;
-    /* Prevent pull-to-refresh on iOS */
-    overscroll-behavior: none;
-  }
-
-  /* iOS momentum scrolling for scrollable containers */
-  .overflow-y-auto,
-  .overflow-y-scroll {
-    -webkit-overflow-scrolling: touch;
-  }
-
-  /* Remove input outlines (custom focus styles used) */
-  input:focus,
-  textarea:focus,
-  button:focus-visible {
-    outline: none;
-  }
-
-  /* Prevent iOS default button styling */
-  button {
-    -webkit-appearance: none;
-    appearance: none;
-    cursor: pointer;
-    border: none;
-    background: transparent;
-  }
+  *, *::before, *::after { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body, #root { height: 100%; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; font-size: 14px; line-height: 1.5; color: #2d2d2d; background-color: #e5e7eb; -webkit-text-size-adjust: 100%; overscroll-behavior: none; }
+  
+  /* Reset de botões */
+  button { -webkit-appearance: none; appearance: none; cursor: pointer; border: none; background: transparent; }
 }
 
-/* ── Mobile Shell ────────────────────────────────────────────────── */
+/* ── Componentes de Estado ───────────────────────────────────────── */
 @layer components {
-  /* The 390px phone frame centered in the browser */
-  .phone-shell {
-    @apply relative mx-auto w-[390px] min-h-screen bg-surface overflow-hidden flex flex-col;
+  /* Usando a mesma cor de borda para ambos os estados, alterando apenas a espessura */
+  .card-border-default {
+    border: 1px solid theme('colors.stroke.DEFAULT') !important;
+  }
+  .card-border-selected {
+    border: 2px solid theme('colors.stroke.DEFAULT') !important;
   }
 
-  /* Scrollable area inside a screen */
-  .scroll-area {
-    @apply flex-1 overflow-y-auto;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior: contain;
-  }
-
-  /* iOS-style safe area padding helpers */
-  .safe-top    { padding-top:    env(safe-area-inset-top,    0px); }
-  .safe-bottom { padding-bottom: env(safe-area-inset-bottom, 0px); }
+  .phone-shell { @apply relative mx-auto w-[390px] min-h-screen bg-surface overflow-hidden flex flex-col; }
+  .scroll-area { @apply flex-1 overflow-y-auto; -webkit-overflow-scrolling: touch; }
 }
 
-/* ── Animations ─────────────────────────────────────────────────── */
+/* ── Animations & Utilities ──────────────────────────────────────── */
 @layer utilities {
-  /* Loading spinner animation */
-  .animate-spin-arc {
-    animation: spin-arc 1.2s linear infinite;
-    transform-origin: center;
-  }
+  .screen-enter { animation: screen-fade-in 0.25s ease-out; }
+  @keyframes screen-fade-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 
-  @keyframes spin-arc {
-    from { transform: rotate(0deg); }
-    to   { transform: rotate(360deg); }
-  }
-
-  /* Dot bounce for loading indicator */
-  .dot-1 { animation: pulse-dot 1.4s ease-in-out 0s    infinite; }
-  .dot-2 { animation: pulse-dot 1.4s ease-in-out 0.2s  infinite; }
-  .dot-3 { animation: pulse-dot 1.4s ease-in-out 0.4s  infinite; }
-
-  @keyframes pulse-dot {
-    0%, 100% { opacity: 1;   transform: scale(1); }
-    50%       { opacity: 0.3; transform: scale(0.7); }
-  }
-
-  /* Screen fade-in transition */
-  .screen-enter {
-    animation: screen-fade-in 0.25s ease-out;
-  }
-
-  @keyframes screen-fade-in {
-    from { opacity: 0; transform: translateY(6px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  /* Soft text shadow — used on hero text over gradient backgrounds */
-  .text-shadow-soft {
-    text-shadow: 0px 4px 8px rgba(112, 108, 108, 0.25);
+  /* Classe para ocultar visualmente elementos mantendo-os acessíveis para leitores de tela */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 }

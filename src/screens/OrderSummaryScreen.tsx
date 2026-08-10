@@ -8,21 +8,10 @@ import StatusBar from '../components/StatusBar'
 import Button from '../components/Button'
 import BackButton from '../components/BackButton'
 import { CheckIcon, InfoIcon } from '../components/icons'
+import { type CartItem, formatPrice, calcCartTotal, calcItemPrice, calcPackagesNeeded, formatPurchaseDisplay, SERVICE_FEE } from '../services/recipeService'
+import { getProductImage } from '../assets/productImages'
 
-// ─── Assets Locais ────────────────────────────────────────────────────────────
-import imgCountdown       from '../assets/icons/countdown.svg'
-import imgLeiteCoco       from '../assets/images/leite-de-coco.png'
-import imgOvos            from '../assets/images/ovos.png'
-import imgAcucar          from '../assets/images/acucar.png'
-import imgLeiteCondensado from '../assets/images/leite-condensado.png'
-
-// ─── Data ─────────────────────────────────────────────────────────────────────
-const ORDER_ITEMS = [
-  { id: 'leite-coco',       name: 'Leite de Coco vegano',        price: 'R$18,00', qty: '1 unidade',   img: imgLeiteCoco        },
-  { id: 'ovos',             name: 'Ovos Jumbo',                  price: 'R$12,90', qty: '12 unidades', img: imgOvos            },
-  { id: 'acucar',           name: 'Açúcar Demerara Mel',         price: 'R$7,50',  qty: '1 unidade',   img: imgAcucar           },
-  { id: 'leite-condensado', name: 'Leite Condensado Zero Lac.',  price: 'R$7,80',  qty: '1 unidade',   img: imgLeiteCondensado },
-]
+import imgCountdown from '../assets/icons/countdown-container.svg'
 
 const UNDO_SECONDS = 5
 
@@ -66,12 +55,15 @@ function ProductRow({
 
 // ─── Screen ───────────────────────────────────────────────────────────────────
 interface OrderSummaryScreenProps {
+  cartItems: CartItem[]
   onBack: () => void
   onCheckout: () => void
   onBackToStore?: () => void
 }
 
-export default function OrderSummaryScreen({ onBack, onCheckout, onBackToStore }: OrderSummaryScreenProps) {
+export default function OrderSummaryScreen({ cartItems, onBack, onCheckout, onBackToStore }: OrderSummaryScreenProps) {
+  const subtotal = calcCartTotal(cartItems)
+  const total    = subtotal + SERVICE_FEE
   const [undoVisible, setUndoVisible] = useState(true)
   const [countdown, setCountdown] = useState(UNDO_SECONDS)
 
@@ -94,20 +86,21 @@ export default function OrderSummaryScreen({ onBack, onCheckout, onBackToStore }
     <div className="flex h-full flex-col bg-surface screen-enter">
       <StatusBar theme="dark" />
 
-      {/* Scrollable content */}
-      <div className="scroll-area flex flex-col px-4 pb-4">
+      {/* S1: landmark principal */}
+      <main className="scroll-area flex flex-col px-4 pb-4">
 
         {/* Back button */}
-        <div className="pt-0 pb-4 shrink-0">
+        <div className="pt-0 pb-2 shrink-0">
           <BackButton onClick={onBack} />
         </div>
 
-        {/* Success header */}
-        <div className="flex flex-col items-center gap-4 py-6">
+        {/* S2: header semântico — agrupa h1 e contexto introdutório */}
+        <header className="flex flex-col items-center gap-4 pt-2 pb-6">
           <div className="flex h-16 w-16 items-center justify-center rounded-check bg-surface-brand">
-            <CheckIcon className="text-content-inverse h-8 w-8" />
+            {/* A3: ícone decorativo */}
+            <CheckIcon aria-hidden="true" className="text-content-inverse h-8 w-8" />
           </div>
-          <div className="flex flex-col items-center gap-2 text-center w-full">
+          <div className="flex flex-col items-center gap-2 text-center whitespace-pre-line">
             <h1 className="font-heading text-heading-xl font-bold text-content-primary w-full">
               Pedido preparado
             </h1>
@@ -115,41 +108,61 @@ export default function OrderSummaryScreen({ onBack, onCheckout, onBackToStore }
               Seus itens foram reservados e estão{'\n'}prontos para o pagamento.
             </p>
           </div>
-        </div>
+        </header>
 
-        {/* Undo snackbar */}
+        {/* A1 + A2: snackbar com região ao vivo — anuncia aparecimento sem repetir countdown */}
         {undoVisible && (
-          <div className="flex flex-col items-center gap-4 rounded-card bg-surface-muted px-2 py-4 mb-4">
+          <div
+            role="status"
+            aria-live="polite"
+            aria-atomic="false"
+            className="flex flex-col items-center gap-4 rounded-card bg-surface-muted px-2 py-4 mb-4"
+          >
             <p className="font-body text-body-md font-medium text-content-primary text-center">
               Pronto! Seu carrinho foi atualizado.
             </p>
+            {/* A5: aria-label estático — countdown silenciado para leitores de tela */}
             <button
+              aria-label="Desfazer alteração no carrinho"
               onClick={() => setUndoVisible(false)}
               className="flex items-center gap-2 active:opacity-70"
             >
-              <img src={imgCountdown} alt="" className="h-5 w-5" />
+              <img src={imgCountdown} alt="" aria-hidden="true" className="h-5 w-5 animate-spin" />
               <span className="font-body text-body-xs font-extrabold text-content-brand">
-                DESFAZER ({countdown}s)
+                DESFAZER{' '}
+                {/* A2: countdown visual apenas — silenciado para leitores de tela */}
+                <span aria-hidden="true">({countdown}s)</span>
               </span>
             </button>
           </div>
         )}
 
-        {/* Summary card */}
-        <div className="flex flex-col gap-4 rounded-card bg-surface-muted px-6 py-4 shadow-card-sm">
-          <p className="font-body text-body-sm font-semibold text-content-brand">
+        {/* S3: section de resumo com título semântico */}
+        <section aria-labelledby="summary-heading" className="flex flex-col gap-4 rounded-card bg-surface-muted px-6 py-4 shadow-card-sm">
+          {/* S4: h2 semântico — era <p> */}
+          <h2 id="summary-heading" className="font-body text-body-sm font-semibold text-content-brand">
             Resumo
-          </p>
+          </h2>
 
           {/* Product list */}
           <div className="flex flex-col">
-            {ORDER_ITEMS.map((item, idx) => (
-              <ProductRow
-                key={item.id}
-                {...item}
-                divider={idx < ORDER_ITEMS.length - 1}
-              />
-            ))}
+            {cartItems.map((item, idx) => {
+              const product = item.status === 'out_of_stock' && item.substitute
+                ? item.substitute
+                : item.product
+              const packages  = calcPackagesNeeded(item.ingredient.quantity, item.ingredient.unit, product)
+              const linePrice = calcItemPrice(item)
+              return (
+                <ProductRow
+                  key={item.product.id}
+                  name={product.name}
+                  price={formatPrice(linePrice)}
+                  qty={formatPurchaseDisplay(packages, product)}
+                  img={getProductImage(product.id)}
+                  divider={idx < cartItems.length - 1}
+                />
+              )
+            })}
           </div>
 
           {/* Divider */}
@@ -157,39 +170,41 @@ export default function OrderSummaryScreen({ onBack, onCheckout, onBackToStore }
 
           {/* Subtotal */}
           <div className="flex items-center justify-between gap-3">
-            <p className="font-body text-body-xs font-semibold text-content-primary flex-1">
+            <p className="font-body text-body-sm text-content-secondary">
               Subtotal
             </p>
             <p className="font-body text-body-md font-bold text-content-primary whitespace-nowrap">
-              R$39,70
+              {formatPrice(subtotal)}
             </p>
           </div>
 
           {/* Service fee */}
           <div className="flex items-center justify-between gap-3">
-            <p className="font-body text-body-xs font-semibold text-content-primary flex-1">
+            <p className="font-body text-body-sm text-content-secondary">
               Taxa de serviço
             </p>
             <div className="flex items-center gap-1 shrink-0">
               <p className="font-body text-body-md font-bold text-content-primary whitespace-nowrap">
-                R$2,00
+                {formatPrice(SERVICE_FEE)}
               </p>
-              <InfoIcon className="text-content-secondary h-4 w-4" />
+              <InfoIcon aria-hidden="true" className="text-content-secondary h-4 w-4" />
             </div>
           </div>
-        </div>
-      </div>
+        </section>
+      </main>
 
-      {/* Sticky footer */}
-      <div className="shrink-0 flex flex-col px-6 pt-4 pb-6 bg-surface border-t border-stroke">
+      {/* S5: landmark de rodapé fixo */}
+      <footer className="shrink-0 flex flex-col px-6 pt-4 pb-6 bg-surface border-t border-stroke">
         {/* Total row */}
         <div className="flex items-center justify-between pb-4">
           <div className="flex flex-col gap-0.5">
             <p className="font-body text-body-md font-semibold text-content-primary">Total:</p>
-            <p className="font-body text-body-sm text-content-primary">4 itens • Frete grátis</p>
+            <p className="font-body text-body-sm text-content-primary">
+              {cartItems.length} {cartItems.length === 1 ? 'item' : 'itens'} • Frete grátis
+            </p>
           </div>
           <p className="font-heading text-heading-xl font-extrabold text-content-primary whitespace-nowrap">
-            R$ 46,80
+            {formatPrice(total)}
           </p>
         </div>
 
@@ -206,9 +221,10 @@ export default function OrderSummaryScreen({ onBack, onCheckout, onBackToStore }
               Voltar ao Mercado
             </span>
           </button>
+          {/* G1: inline style no lugar de classes arbitrárias */}
           <div className="h-[5px] w-[134px] rounded-full bg-neutral-150" />
         </div>
-      </div>
+      </footer>
     </div>
   )
 }

@@ -77,3 +77,65 @@ export function HouseIcon({ className, ...props }: IconProps) {
     </svg>
   )
 }
+
+export function BookmarkIcon({ className, ...props }: IconProps) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" className={className} {...props}>
+      <path d="M5 3h14a1 1 0 0 1 1 1v17l-8-4-8 4V4a1 1 0 0 1 1-1z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
+    </svg>
+  )
+}
+
+export function UserIcon({ className, ...props }: IconProps) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" className={className} {...props}>
+      <circle cx="12" cy="8" r="4" stroke="currentColor" strokeWidth="1.5"/>
+      <path d="M4 20c0-4 3.582-7 8-7s8 3 8 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+    </svg>
+  )
+}
+
+export function PixIcon({ className, ...props }: IconProps) {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} {...props}>
+      <path d="M7.5 7.5L12 3L16.5 7.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M7.5 16.5L12 21L16.5 16.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M3 12L7.5 7.5L12 12L7.5 16.5L3 12Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
+      <path d="M21 12L16.5 7.5L12 12L16.5 16.5L21 12Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
+    </svg>
+  )
+}
+
+export function CreditCardIcon({ className, ...props }: IconProps) {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} {...props}>
+      <rect x="2" y="5" width="20" height="14" rx="3" stroke="currentColor" strokeWidth="1.5"/>
+      <path d="M2 10H22" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+      <path d="M6 15H9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+      <path d="M13 15H15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+    </svg>
+  )
+}
+
+export function MealVoucherIcon({ className, ...props }: IconProps) {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} {...props}>
+      <path d="M12 3C9.25 3 7 5.25 7 8C7 9.86 8.04 11.48 9.57 12.35C8.62 12.78 7.78 13.42 7.13 14.24C6.41 15.14 6 16.27 6 17.5C6 18.33 6.67 19 7.5 19H16.5C17.33 19 18 18.33 18 17.5C18 16.27 17.59 15.14 16.87 14.24C16.22 13.42 15.38 12.78 14.43 12.35C15.96 11.48 17 9.86 17 8C17 5.25 14.75 3 12 3Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
+      <path d="M9 8H15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+      <path d="M10 11H14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+    </svg>
+  )
+}
+
+export function ShoppingCartIcon({ className, ...props }: IconProps) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none" className={className} {...props}>
+      <path
+        d="M2.73279 2.73279H5.39946L8.94612 19.2936C9.07623 19.9001 9.41368 20.4423 9.9004 20.8268C10.3871 21.2114 10.9927 21.4142 11.6128 21.4004H24.6528C25.2597 21.3994 25.8481 21.1914 26.3208 20.8108C26.7935 20.4302 27.1223 19.8997 27.2528 19.307L29.4528 9.39979H6.82612M11.9997 28.001C11.9997 28.7374 11.4028 29.3344 10.6664 29.3344C9.93 29.3344 9.33305 28.7374 9.33305 28.001C9.33305 27.2646 9.93 26.6676 10.6664 26.6676C11.4028 26.6676 11.9997 27.2646 11.9997 28.001ZM26.6664 28.001C26.6664 28.7374 26.0694 29.3344 25.333 29.3344C24.5967 29.3344 23.9997 28.7374 23.9997 28.001C23.9997 27.2646 24.5967 26.6676 25.333 26.6676C26.0694 26.6676 26.6664 27.2646 26.6664 28.001Z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+    </svg>
+  )
+}
