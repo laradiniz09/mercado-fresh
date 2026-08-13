@@ -6,7 +6,7 @@
 
 ## Sobre o Projeto
 
-Aplicação web que simula um mercado inteligente com foco em experiência do usuário e . O usuário digita no app do mercado o que deseja cozinhar e suas restrições (ex: fazer um "pudim" sendo "intolerante à lactose"). O sistema cruza os dados, filtra os ingredientes e lida com a indisponibilidade de itens, sugerindo substitutos da mesma categoria.
+Aplicação web que simula um mercado em que o usuário digita no app do mercado o que deseja cozinhar e suas restrições (ex: fazer um "pudim" sendo "intolerante à lactose"). O sistema cruza os dados, filtra os ingredientes e lida com a indisponibilidade de itens, sugerindo substitutos da mesma categoria.
 
 > **Nota:** Esta é uma simulação baseada nas práticas do mercado. O projeto é um MVP Web para validação inicial, com transição prevista para Expo após a aprovação do fluxo.
 
