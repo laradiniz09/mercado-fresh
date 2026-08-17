@@ -49,7 +49,8 @@ import {
   getCartItemsForRecipe,
   detectLactoseIntolerance,
   detectRecipeFromQuery,
-  calcOrderTotal,
+  calcOrderTotalWithQty,
+  calcPackagesNeeded,
 } from './services/recipeService'
 import { getRecipeById } from './database'
 
@@ -69,10 +70,25 @@ export default function App() {
   const [query,   setQuery]   = useState('')
 
   // Estado global do carrinho — inicializado com o pudim sem restrição de lactose
-  const [cartItems, setCartItems] = useState<CartItem[]>(() =>
-    getCartItemsForRecipe('pudim-leite-condensado', false)
-  )
+  const initialItems = getCartItemsForRecipe('pudim-leite-condensado', false)
+  const [cartItems, setCartItems] = useState<CartItem[]>(initialItems)
   const [recipeName, setRecipeName] = useState('Pudim de Leite Condensado')
+
+  /** Inicializa um mapa product.id → nº de embalagens a partir de um array de CartItem */
+  function buildQuantities(items: CartItem[]): Record<string, number> {
+    return Object.fromEntries(
+      items.map((i) => [
+        i.product.id,
+        calcPackagesNeeded(i.ingredient.quantity, i.ingredient.unit, i.product),
+      ])
+    )
+  }
+
+  // Quantidades de embalagens ajustadas pelo usuário — elevadas para sobreviver à navegação
+  const [quantities, setQuantities] = useState<Record<string, number>>(
+    () => buildQuantities(initialItems)
+  )
+
   // Item esgotado que o usuário escolheu substituir
   const [pendingSubstitution, setPendingSubstitution] = useState<CartItem | null>(null)
 
@@ -100,6 +116,7 @@ export default function App() {
     try {
       const items = getCartItemsForRecipe(recipeId, isLactoseIntolerant)
       setCartItems(items)
+      setQuantities(buildQuantities(items))
       setRecipeName(recipe?.name ?? recipeId)
     } catch {
       // RecipeNotFoundError — mantém o carrinho atual
@@ -111,6 +128,11 @@ export default function App() {
   /** Remove um item do carrinho pelo product.id */
   const handleRemoveItem = (productId: string) => {
     setCartItems((prev) => prev.filter((item) => item.product.id !== productId))
+    setQuantities((prev) => {
+      const next = { ...prev }
+      delete next[productId]
+      return next
+    })
   }
 
   /**
@@ -136,6 +158,28 @@ export default function App() {
         // 'notify' ou sem substituto: remove o item
         return prev.filter((item) => item.product.id !== pendingSubstitution.product.id)
       })
+
+      if (option === 'substitute' && pendingSubstitution.substitute) {
+        // Migra a quantidade do produto original para o substituto
+        setQuantities((prev) => {
+          const next = { ...prev }
+          const sub = pendingSubstitution.substitute!
+          next[sub.id] = calcPackagesNeeded(
+            pendingSubstitution.ingredient.quantity,
+            pendingSubstitution.ingredient.unit,
+            sub,
+          )
+          delete next[pendingSubstitution.product.id]
+          return next
+        })
+      } else {
+        // Remove a entrada do produto descartado
+        setQuantities((prev) => {
+          const next = { ...prev }
+          delete next[pendingSubstitution.product.id]
+          return next
+        })
+      }
     }
     navigate('order-summary')
   }
@@ -183,6 +227,10 @@ export default function App() {
         {screen === 'ingredients' && (
           <IngredientsScreen
             cartItems={cartItems}
+            quantities={quantities}
+            onQuantityChange={(id, delta) =>
+              setQuantities((prev) => ({ ...prev, [id]: Math.max(1, (prev[id] ?? 1) + delta) }))
+            }
             recipeName={recipeName}
             onBack={goHome}
             onContinue={() => navigate('order-summary')}
@@ -206,6 +254,7 @@ export default function App() {
         {screen === 'order-summary' && (
           <OrderSummaryScreen
             cartItems={cartItems}
+            quantities={quantities}
             onBack={goBack}
             onCheckout={() => navigate('payment')}
             onBackToStore={goHome}
@@ -214,7 +263,7 @@ export default function App() {
 
         {screen === 'payment' && (
           <PaymentScreen
-            total={calcOrderTotal(cartItems)}
+            total={calcOrderTotalWithQty(cartItems, quantities)}
             onBack={goBack}
             onConfirm={goHome}
           />

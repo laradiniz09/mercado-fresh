@@ -5,7 +5,6 @@
  *
  * Dados vêm de CartItem[] (recipeService) — sem mocks hardcoded.
  */
-import { useState } from 'react'
 import StatusBar from '../components/StatusBar'
 import Button from '../components/Button'
 import BackButton from '../components/BackButton'
@@ -98,6 +97,8 @@ function IngredientCard({
 // ─── Screen ───────────────────────────────────────────────────────────────────
 interface IngredientsScreenProps {
   cartItems: CartItem[]
+  quantities: Record<string, number>
+  onQuantityChange: (productId: string, delta: number) => void
   recipeName?: string
   onBack: () => void
   onContinue: () => void
@@ -107,26 +108,14 @@ interface IngredientsScreenProps {
 
 export default function IngredientsScreen({
   cartItems,
+  quantities,
+  onQuantityChange,
   recipeName = 'receita',
   onBack,
   onContinue,
   onSubstitute,
   onRemove,
 }: IngredientsScreenProps) {
-  // Quantidades em embalagens comerciais (pacotes, bandejas, latas…),
-  // calculadas uma vez a partir da quantidade culinária da receita.
-  // Os botões +/- somam ou subtraem 1 embalagem inteira por clique.
-  const [quantities, setQuantities] = useState<Record<string, number>>(
-    () => Object.fromEntries(
-      cartItems.map((i) => [
-        i.product.id,
-        calcPackagesNeeded(i.ingredient.quantity, i.ingredient.unit, i.product),
-      ])
-    )
-  )
-
-  const updateQty = (id: string, delta: number) =>
-    setQuantities((prev) => ({ ...prev, [id]: Math.max(1, (prev[id] ?? 1) + delta) }))
 
   const availableItems   = cartItems.filter((i) => i.status === 'available')
   const unavailableItems = cartItems.filter((i) => i.status !== 'available')
@@ -169,8 +158,8 @@ export default function IngredientsScreen({
                   badge={badge?.text ?? null}
                   badgeColor={badge?.color ?? ''}
                   qty={quantities[item.product.id] ?? item.ingredient.quantity}
-                  onDecrement={() => updateQty(item.product.id, -1)}
-                  onIncrement={() => updateQty(item.product.id, +1)}
+                  onDecrement={() => onQuantityChange(item.product.id, -1)}
+                  onIncrement={() => onQuantityChange(item.product.id, +1)}
                 />
               )
             })}

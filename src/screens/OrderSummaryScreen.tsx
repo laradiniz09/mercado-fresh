@@ -8,7 +8,7 @@ import StatusBar from '../components/StatusBar'
 import Button from '../components/Button'
 import BackButton from '../components/BackButton'
 import { CheckIcon, InfoIcon } from '../components/icons'
-import { type CartItem, formatPrice, calcCartTotal, calcItemPrice, calcPackagesNeeded, formatPurchaseDisplay, SERVICE_FEE } from '../services/recipeService'
+import { type CartItem, formatPrice, calcCartTotalWithQty, calcItemPriceWithQty, calcPackagesNeeded, formatPurchaseDisplay, SERVICE_FEE } from '../services/recipeService'
 import { getProductImage } from '../assets/productImages'
 
 import imgCountdown from '../assets/icons/countdown-container.svg'
@@ -56,13 +56,14 @@ function ProductRow({
 // ─── Screen ───────────────────────────────────────────────────────────────────
 interface OrderSummaryScreenProps {
   cartItems: CartItem[]
+  quantities: Record<string, number>
   onBack: () => void
   onCheckout: () => void
   onBackToStore?: () => void
 }
 
-export default function OrderSummaryScreen({ cartItems, onBack, onCheckout, onBackToStore }: OrderSummaryScreenProps) {
-  const subtotal = calcCartTotal(cartItems)
+export default function OrderSummaryScreen({ cartItems, quantities, onBack, onCheckout, onBackToStore }: OrderSummaryScreenProps) {
+  const subtotal = calcCartTotalWithQty(cartItems, quantities)
   const total    = subtotal + SERVICE_FEE
   const [undoVisible, setUndoVisible] = useState(true)
   const [countdown, setCountdown] = useState(UNDO_SECONDS)
@@ -150,14 +151,14 @@ export default function OrderSummaryScreen({ cartItems, onBack, onCheckout, onBa
               const product = item.status === 'out_of_stock' && item.substitute
                 ? item.substitute
                 : item.product
-              const packages  = calcPackagesNeeded(item.ingredient.quantity, item.ingredient.unit, product)
-              const linePrice = calcItemPrice(item)
+              const qty       = quantities[item.product.id] ?? calcPackagesNeeded(item.ingredient.quantity, item.ingredient.unit, product)
+              const linePrice = calcItemPriceWithQty(item, qty)
               return (
                 <ProductRow
                   key={item.product.id}
                   name={product.name}
                   price={formatPrice(linePrice)}
-                  qty={formatPurchaseDisplay(packages, product)}
+                  qty={formatPurchaseDisplay(qty, product)}
                   img={getProductImage(product.id)}
                   divider={idx < cartItems.length - 1}
                 />
@@ -200,7 +201,10 @@ export default function OrderSummaryScreen({ cartItems, onBack, onCheckout, onBa
           <div className="flex flex-col gap-0.5">
             <p className="font-body text-body-md font-semibold text-content-primary">Total:</p>
             <p className="font-body text-body-sm text-content-primary">
-              {cartItems.length} {cartItems.length === 1 ? 'item' : 'itens'} • Frete grátis
+              {(() => {
+                const totalItems = Object.values(quantities).reduce((s, q) => s + q, 0)
+                return `${totalItems} ${totalItems === 1 ? 'item' : 'itens'} • Frete grátis`
+              })()}
             </p>
           </div>
           <p className="font-heading text-heading-xl font-extrabold text-content-primary whitespace-nowrap">

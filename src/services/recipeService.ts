@@ -356,10 +356,13 @@ function pluralizePackage(name: string): string {
   return PLURAL[name] ?? `${name}s`
 }
 
-/** Formata medida total da embalagem (ex: 1000g → "1000g", 12 unidades → "12 unidades") */
+/** Formata medida total da embalagem (ex: 1000g → "1 kg", 12 unidades → "12 unidades") */
 function formatPackageSize(totalSize: number, unit: Unit): string {
-  // 1000g exibido como "1kg" por legibilidade
-  if (unit === 'g' && totalSize === 1000) return '1kg'
+  if (unit === 'g' && totalSize >= 1000) {
+    const kg = totalSize / 1000
+    const kgStr = Number.isInteger(kg) ? `${kg}` : kg.toFixed(1).replace('.', ',')
+    return `${kgStr} kg`
+  }
   const noSpace: Partial<Record<Unit, true>> = { g: true, ml: true, kg: true, l: true }
   if (noSpace[unit]) return `${totalSize}${unit}`
   const plural: Partial<Record<Unit, string>> = {
@@ -374,7 +377,7 @@ function formatPackageSize(totalSize: number, unit: Unit): string {
  *
  * Exemplos:
  *   - 1 bandeja de ovos  → "1 bandeja (12 unidades)"
- *   - 1 pacote de açúcar → "1 pacote (1000g)"
+ *   - 1 pacote de açúcar → "1 pacote (1 kg)"
  *   - 3 barras chocolate → "3 barras (3 unidades)"
  *   - 1 lata creme coco  → "1 lata (200ml)"
  */
@@ -429,4 +432,47 @@ export const SERVICE_FEE = 2.00
  */
 export function calcOrderTotal(items: CartItem[]): number {
   return calcCartTotal(items) + SERVICE_FEE
+}
+
+// ─── Variantes com quantidades explícitas (user-overridden) ───────────────────
+
+/**
+ * Calcula o preço de linha de um item usando uma quantidade de embalagens
+ * explicitamente fornecida — respeitando o ajuste feito pelo usuário na tela
+ * de ingredientes, em vez de recalcular a partir da receita.
+ */
+export function calcItemPriceWithQty(item: CartItem, qty: number): number {
+  if (item.status === 'no_substitute') return 0
+  const product =
+    item.status === 'out_of_stock' && item.substitute
+      ? item.substitute
+      : item.product
+  return product.price * qty
+}
+
+/**
+ * Calcula o subtotal do carrinho usando o mapa de quantidades ajustadas
+ * pelo usuário. Itens sem chave no mapa recaem para calcPackagesNeeded.
+ */
+export function calcCartTotalWithQty(
+  items: CartItem[],
+  quantities: Record<string, number>,
+): number {
+  return items.reduce((acc, item) => {
+    const qty =
+      quantities[item.product.id] ??
+      calcPackagesNeeded(item.ingredient.quantity, item.ingredient.unit, item.product)
+    return acc + calcItemPriceWithQty(item, qty)
+  }, 0)
+}
+
+/**
+ * Retorna o total final do pedido respeitando as quantidades ajustadas:
+ * subtotal (com qty do usuário) + taxa de serviço.
+ */
+export function calcOrderTotalWithQty(
+  items: CartItem[],
+  quantities: Record<string, number>,
+): number {
+  return calcCartTotalWithQty(items, quantities) + SERVICE_FEE
 }
