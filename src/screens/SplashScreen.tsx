@@ -10,7 +10,6 @@ interface SplashScreenProps {
 
 export default function SplashScreen({ onFinish }: SplashScreenProps) {
   useEffect(() => {
-    // Mantém na Splash Screen por 2 segundos e depois chama a função para avançar
     const timer = setTimeout(() => {
       onFinish()
     }, 2000)
@@ -19,14 +18,13 @@ export default function SplashScreen({ onFinish }: SplashScreenProps) {
   }, [onFinish])
 
   return (
-    // Adicionado aria-live="polite" para informar leitores de tela sobre o carregamento inicial
-    <main 
-      role="region" 
-      aria-label="Carregando aplicativo Mercado Fresh" 
-      className="flex h-full flex-col items-center justify-between pb-12 bg-gradient-to-b from-fresh-light to-fresh-dark screen-enter"
+    <main
+      role="region"
+      aria-label="Carregando aplicativo Mercado Fresh"
+      className="relative flex h-full flex-col justify-between overflow-hidden bg-gradient-to-b from-fresh-light to-fresh-dark screen-enter"
     >
       {/* Header com Status Bar */}
-      <header className="flex h-11 w-full shrink-0 items-center justify-between px-6">
+      <header className="flex h-11 w-full shrink-0 items-center justify-between px-6 z-10">
         <span aria-hidden="true" className="font-heading text-status-bar text-content-inverse">9:41</span>
         <span className="sr-only">Horário atual: 9 horas e 41 minutos</span>
         <div className="flex items-center gap-1.5">
@@ -36,22 +34,22 @@ export default function SplashScreen({ onFinish }: SplashScreenProps) {
         </div>
       </header>
 
-      {/* Conteúdo Centralizado */}
-      <div className="flex flex-col items-center gap-6">
-        <div className="w-25 h-24 overflow-hidden flex items-center justify-center">
+      {/* Espaço intermediário livre (vazio para permitir que o fundo degrade respire) */}
+      <div className="flex-1" />
+
+      {/* Bloco único na base: Título + Imagem colados e com gap de 16px (gap-4) */}
+      <div className="flex flex-col items-center w-full z-10">
+        <div className="flex flex-col items-center gap-4 w-full">
+          <h1 className="font-script text-heading-xxl text-content-inverse text-shadow-soft text-center">
+            Mercado Fresh
+          </h1>
           <img
             src={imgCart}
-            alt="Ilustração de um carrinho de compras com produtos frescos, representando o logotipo do Mercado Fresh"
-            className="h-full w-full object-contain"
+            alt="Ilustração de mulher segurando uma cesta de frutas e legumes frescos"
+            className="w-full object-contain"
           />
         </div>
-        <h1 className="font-script text-heading-xxl text-content-inverse text-shadow-soft">
-          Mercado Fresh
-        </h1>
       </div>
-
-      {/* Espaçador decorativo */}
-      <div className="h-10" aria-hidden="true" />
     </main>
   )
 }

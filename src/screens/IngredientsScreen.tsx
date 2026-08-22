@@ -206,6 +206,7 @@ export default function IngredientsScreen({
                 <div className="flex gap-3">
                   <button
                     onClick={() => onRemove(item.product.id)}
+                    aria-label={`Remover ${item.product.name} do pedido`}
                     className="flex h-11 w-40 items-center justify-center rounded-xl bg-neutral-100 active:opacity-80"
                   >
                     <span className="font-body text-body-md font-semibold text-danger">
@@ -216,6 +217,7 @@ export default function IngredientsScreen({
                   {item.status === 'out_of_stock' && (
                     <button
                       onClick={() => onSubstitute(item)}
+                      aria-label={`Escolher substituto para ${item.product.name}`}
                       className="flex h-11 w-40 items-center justify-center rounded-xl bg-fresh-light active:opacity-90"
                     >
                       <span className="font-body text-body-md font-semibold text-content-inverse">
@@ -233,7 +235,7 @@ export default function IngredientsScreen({
 
       </main>
 
-      {/* Footer fixo — estrutura idêntica à OrderSummaryScreen */}
+      {/* Footer fixo */}
       <footer className="shrink-0 flex flex-col px-6 pt-4 pb-6 bg-surface border-t border-stroke">
         <div className="flex flex-col items-center gap-3">
           <Button variant="primary" onClick={onContinue}>

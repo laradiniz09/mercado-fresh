@@ -121,7 +121,7 @@ export default function HomeScreen({ onSearch, onGoToCart }: HomeScreenProps) {
       <main className="scroll-area px-6 pb-4 pt-4 flex flex-col">
 
         {/* AI Input Card — mb-4 (16px embaixo) e bg-surface-card (ou bg-card se ajustado no tailwind) */}
-        <div className="mb-4 relative rounded-xl bg-surface-brand flex flex-col gap-4 w-full p-4 overflow-hidden">
+        <div className="mb-4 relative rounded-xl bg-surface-card flex flex-col gap-4 w-full p-4 overflow-hidden">
           <div className="flex flex-col gap-1 px-4">
             <h2 className="font-heading text-heading-md text-content-inverse leading-tight">O que vamos cozinhar hoje?</h2>
             <p className="font-body text-body-sm text-content-inverse opacity-90 leading-tight">

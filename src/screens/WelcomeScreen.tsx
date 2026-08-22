@@ -11,7 +11,7 @@ import imgWifi        from '../assets/icons/wifi.svg'
 import imgBattery     from '../assets/icons/battery.svg'
 
 // Imagem (PNG) na pasta assets/images
-import imgCart        from '../assets/images/carrinho.png'
+import imgIcon        from '../assets/images/icon.png'
 
 interface WelcomeScreenProps {
   onStart: () => void
@@ -20,7 +20,7 @@ interface WelcomeScreenProps {
 export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
   return (
     // S1: landmark principal
-    <main className="flex h-full flex-col items-center justify-between pb-12 bg-gradient-to-b from-fresh-light to-fresh-dark screen-enter">
+    <main className="flex h-full flex-col bg-gradient-to-b from-fresh-light to-fresh-dark screen-enter">
 
       {/* S2: header semântico — Status Bar light theme */}
       <header className="flex h-11 w-full shrink-0 items-center justify-between px-6">
@@ -36,17 +36,8 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
         </div>
       </header>
 
-      {/* Center Content */}
-      <div className="flex w-full flex-col items-center gap-6">
-
-        {/* Cart Illustration */}
-        <div className="w-25 h-24 overflow-hidden flex items-center justify-center">
-          <img
-            src={imgCart}
-            alt="Ilustração de um carrinho de compras cheio de produtos frescos"
-            className="h-full w-full object-contain"
-          />
-        </div>
+      {/* Center Content — flex-1 garante centralização vertical real entre header e footer */}
+      <div className="flex flex-1 flex-col items-center justify-center gap-6">
 
         {/* Store Name + Tagline */}
         <div className="flex flex-col items-center gap-2 px-6">
@@ -54,13 +45,23 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
             Mercado Fresh
           </h1>
           <p className="font-body text-body-lg text-content-inverse text-center text-shadow-soft">
-            Comida fresquinha entregue na sua casa
+            Comida entregue na sua casa
           </p>
         </div>
+
+        {/* Cart Illustration */}
+        <div className="w-44 h-44 overflow-hidden flex items-center justify-center">
+          <img
+            src={imgIcon}
+            alt="Ilustração de uma cesta de compras cheia de produtos frescos"
+            className="h-full w-full object-contain"
+          />
+        </div>
+
       </div>
 
       {/* S3: footer semântico — CTA */}
-      <footer className="w-full px-4">
+      <footer className="w-full px-4 pb-12">
         <Button
           variant="primary"
           onClick={onStart}
