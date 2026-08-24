@@ -55,11 +55,12 @@ export default {
         heading: ['Roboto', 'sans-serif'],                          // Font-family/Heading
         body:    ['Inter',  'sans-serif'],                          // Font-family/Body
         sans:    ['Inter',  'sans-serif'],                          // default
-        script:  ['"Segoe Script"', 'cursive', 'sans-serif'],       // Splash logo
+        script:  ['Caveat', 'cursive', 'sans-serif'],       // Splash logo
       },
       fontSize: {
         // Heading scale (Font-size / Heading — Figma)
         'heading-xxl': ['32px', { lineHeight: '1.05', fontWeight: '700' }], // heading-xxl ← novo
+        'logo-title':  ['40px', { lineHeight: '1.1',  fontWeight: '700' }], // título principal (Splash + Welcome)
         'heading-xl':  ['24px', { lineHeight: '1.1',  fontWeight: '700' }], // heading-xl
         'heading-lg':  ['20px', { lineHeight: '1.1',  fontWeight: '700' }], // heading-lg ← novo
         'heading-md':  ['18px', { lineHeight: '1.1',  fontWeight: '700' }], // heading-md

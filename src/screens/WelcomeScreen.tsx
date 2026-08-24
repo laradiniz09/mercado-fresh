@@ -41,7 +41,7 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
 
         {/* Store Name + Tagline */}
         <div className="flex flex-col items-center gap-2 px-6">
-          <h1 className="font-script text-heading-xxl text-content-inverse text-shadow-soft">
+          <h1 className="font-script text-logo-title font-bold text-content-inverse text-shadow-soft">
             Mercado Fresh
           </h1>
           <p className="font-body text-body-lg text-content-inverse text-center text-shadow-soft">
@@ -50,7 +50,7 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
         </div>
 
         {/* Cart Illustration */}
-        <div className="w-44 h-44 overflow-hidden flex items-center justify-center">
+        <div className="w-60 h-60 overflow-hidden flex items-center justify-center">
           <img
             src={imgIcon}
             alt="Ilustração de uma cesta de compras cheia de produtos frescos"

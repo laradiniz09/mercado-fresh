@@ -40,7 +40,7 @@ export default function SplashScreen({ onFinish }: SplashScreenProps) {
       {/* Bloco único na base: Título + Imagem colados e com gap de 16px (gap-4) */}
       <div className="flex flex-col items-center w-full z-10">
         <div className="flex flex-col items-center gap-4 w-full">
-          <h1 className="font-script text-heading-xxl text-content-inverse text-shadow-soft text-center">
+          <h1 className="font-script text-logo-title font-bold text-content-inverse text-shadow-soft text-center">
             Mercado Fresh
           </h1>
           <img
