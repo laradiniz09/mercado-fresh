@@ -219,7 +219,6 @@ export default function App() {
 
         {screen === 'loading' && (
           <LoadingScreen
-            query={query}
             onComplete={() => navigate('ingredients')}
           />
         )}

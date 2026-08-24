@@ -9,7 +9,7 @@ import StatusBar from '../components/StatusBar'
 import Button from '../components/Button'
 import BackButton from '../components/BackButton'
 import { TrashIcon } from '../components/icons'
-import { type CartItem, formatPrice, calcPackagesNeeded } from '../services/recipeService'
+import { type CartItem, formatPrice } from '../services/recipeService'
 import { getProductImage } from '../assets/productImages'
 
 import imgPlus from '../assets/icons/plus.svg'
