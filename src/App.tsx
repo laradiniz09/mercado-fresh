@@ -67,7 +67,6 @@ type Screen =
 export default function App() {
   // History stack — last item is current screen (iniciando com 'splash')
   const [history, setHistory] = useState<Screen[]>(['splash'])
-  const [query,   setQuery]   = useState('')
 
   // Estado global do carrinho — inicializado com o pudim sem restrição de lactose
   const initialItems = getCartItemsForRecipe('pudim-leite-condensado', false)
