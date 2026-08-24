@@ -120,7 +120,6 @@ export default function App() {
     } catch {
       // RecipeNotFoundError — mantém o carrinho atual
     }
-    setQuery(q)
     navigate('loading')
   }
 
