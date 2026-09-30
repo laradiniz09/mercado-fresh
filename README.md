@@ -1,6 +1,6 @@
 # Mercado Fresh (MVP)
 
-**Nota de Contexto:** Este projeto foi desenvolvido inteiramente como um estudo prático de produto para aprofundar conhecimentos em UX Design, Inteligência Artificial,  Design System (DS), regras de negócio, desenvolvimento frontend (código), acessibilidade e boas práticas de versionamento (Git/GitHub e segurança).
+**Nota de Contexto:** Este projeto foi desenvolvido inteiramente como um estudo prático de produto para aprofundar conhecimentos em UX Design, Inteligência Artificial, Design System (DS), regras de negócio, desenvolvimento frontend (código), acessibilidade e boas práticas de versionamento (Git/GitHub e segurança).
 
 ---
 
@@ -14,11 +14,11 @@ Aplicação web que simula um mercado em que o usuário digita no app do mercado
 
 ## Como Funciona na Prática (Exemplo de Teste)
 
-O projeto conta com uma base de dados centralizada no arquivo `recipes.js`* (contendo receitas como bolo de fubá, mousse de chocolate e pudim). 
+O projeto conta com uma base de dados centralizada no arquivo `recipeService.ts` (contendo receitas como bolo de fubá, mousse de chocolate e pudim). 
 
-- **Exemplo de Uso:** Ao buscar por **pudim** com restrição de **intolerância à lactose**: "Quero fazer um pudim, mas sou intolerante à lactose"
-  1. O sistema consulta o `recipes.js` para buscar os ingredientes originais.
-  2. Cruza os dados com as restrições informadas no `database.ts` .
+- **Exemplo de Uso:** Ao buscar por **pudim** com restrição de **intolerância à lactose**: *"Quero fazer um pudim, mas sou intolerante à lactose"*
+  1. O sistema consulta o `recipeService.ts` para buscar os ingredientes originais.
+  2. Cruza os dados com as restrições informadas no `database.ts`.
   3. Identifica os itens com lactose, filtra e **indica ingredientes substitutos** adequados da mesma categoria, respeitando a regra de negócio.
 
 ---
@@ -35,10 +35,9 @@ Este protótipo/MVP foca em validar o fluxo principal de ponta a ponta:
 ## O que foi exercitado neste estudo?
 
 - **UX e Design:** Arquitetura de informação, fluxos de telas e aplicação de Design System.
-- **Criação de uma tela:** Com base no design system bem definido, utilizando a integração via **MCP Figma-cursor**.
-- Uso do MCP Figma-cursor.
-- **Regras de Negócio:** Tratamento de restrições alimentares e substituição de ingredientes via `recipes.js` e  `database.ts`
-- **Engenharia e Código:** Componentização limpa, estruturação de pastas e tipagem.
+- **Criação de Telas:** Com base no design system bem definido, utilizando a integração via **MCP Figma-Cursor**.
+- **Regras de Negócio:** Tratamento de restrições alimentares e substituição de ingredientes via `recipeService.ts` e `database.ts`.
+- **Engenharia e Código:** Componentização limpa, estruturação de pastas e tipagem com TypeScript.
 - **Acessibilidade:** Padrões inclusivos na interface.
 - **Git e Segurança:** Uso correto de `.gitignore`, proteção de dados sensíveis e padronização de commits.
 
@@ -49,22 +48,14 @@ Este protótipo/MVP foca em validar o fluxo principal de ponta a ponta:
 Certifique-se de ter o Node.js instalado. No terminal, execute:
 
 ```bash
-
 # Clone o repositório
-
-git clone  https://github.com/laradiniz09/mercado-fresh.git
+git clone [https://github.com/laradiniz09/mercado-fresh.git](https://github.com/laradiniz09/mercado-fresh.git)
 
 # Entre na pasta do projeto
-
 cd mercado-fresh
 
 # Instale as dependências
-
 npm install
 
 # Inicie o projeto em modo de desenvolvimento
-
 npm run dev
-
-```
-
